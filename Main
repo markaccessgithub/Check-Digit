@@ -1,6 +1,8 @@
 def ISBNcheck(ISBN):
 
 
+
+
     # Split the ISBN into the Unique ID and the check digit
     unique_id = []
     for i in range(len(ISBN)-1):
@@ -8,20 +10,24 @@ def ISBNcheck(ISBN):
     actual_check_digit = ISBN[-1:]
 
 
+
+
     # Multiply the second, fourth, sixth, ... elements by three
     times_three=[]
     for x in range(len(unique_id)):
-        if x%2 == 0:
+        if x%2 == 1:
             times_three.append(unique_id[x]*3)
         else:
             times_three.append(unique_id[x])
+
+
 
 
     # Calculate the sum of the numbers
     sum_new_digits = 0
     for x in range(0,len(times_three)):
         sum_new_digits += times_three[x]
-        
+       
     # Take the sum mod 10, and subtract from 10
     sum_mod_10 = sum_new_digits % 10
     if sum_mod_10 == 0:
@@ -29,12 +35,19 @@ def ISBNcheck(ISBN):
     check_digit = 10 - sum_mod_10
 
 
+
+
     # Check that the calculated check digit is equal to the given check digit
-    if check_digit == actual_check_digit:
+    if check_digit == int(actual_check_digit):
         return "valid."
     else:
         return "invalid."
 
 
+
+
 choice = input("Enter the ISBN number: ")
-print("ISBNcheck() returns " + ISBNcheck(choice))
+if len(choice) == 13:
+    print("ISBNcheck() returns " + ISBNcheck(choice))
+elif len(choice) != 13:
+    print("ISBN number must be 13 digits")
